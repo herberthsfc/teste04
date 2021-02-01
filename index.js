@@ -1052,8 +1052,8 @@ client.on('group-participants-update', async (anu) => {
           if (!isRegistered) return reply(ind.noregis())
             await client.sendMessage(from, `Pong!!!!\nSpeed: ${processTime(time, moment())} _Second_`)
 					break
-               case 'help': 
-				case 'menu':
+               case 'hejsjs': 
+				case 'mennn':
 				if (!isRegistered) return reply(ind.noregis())
 				    const reqXp  = 5000 * (Math.pow(2, getLevelingLevel(sender)) - 1)
 				    const uangku = checkATMuser(sender)
@@ -1595,22 +1595,22 @@ client.on('group-participants-update', async (anu) => {
 						client.groupMakeAdmin(from, mentioned)
 					}
 					break	
-			     	case 'kick':
+			     	case 'ban':
 					if (!isGroup) return reply(ind.groupo())
 					if (!isGroupAdmins) return reply(ind.admin())
 					if (!isBotGroupAdmins) return reply(ind.badmin())
-					if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('𝗧𝗮𝗴 𝘁𝗮𝗿𝗴𝗲𝘁 ??𝗮𝗻𝗴 𝗶𝗻𝗴𝗶𝗻 𝗱𝗶 𝘁𝗲𝗻𝗱𝗮𝗻𝗴!')
+					if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('SE FODEU! Removido com sucesso!')
 					mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
 					if (mentioned.length > 1) {
 						teks = ''
 						for (let _ of mentioned) {
-							teks += `𝗔𝘀𝗲𝗸 𝗱𝗮𝗽𝗮𝘁 𝗺𝗮𝗸𝗮𝗻𝗮𝗻,𝗼𝘁𝘄 𝗸𝗶𝗰𝗸 🏃 :\n`
+							teks += `SE FODEU! Removido com sucesso! :\n`
 							teks += `@_.split('@')[0]`
 						}
 						mentions(teks, mentioned, true)
 						client.groupRemove(from, mentioned)
 					} else {
-						mentions(`𝗔𝘀𝗲𝗸 𝗱𝗮𝗽𝗮𝘁 𝗺𝗮𝗸𝗮𝗻𝗮𝗻,𝗼𝘁𝘄 𝗸𝗶𝗰𝗸 @${mentioned[0].split('@')[0]} 🏃`, mentioned, true)
+						mentions(`*SE FODEU! @${mentioned[0].split('@')[0]} Removido(a) com sucesso! ✔️*`, mentioned, true)
 						client.groupRemove(from, mentioned)
 					}
 					break
