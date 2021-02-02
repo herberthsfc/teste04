@@ -488,7 +488,7 @@ client.on('group-participants-update', async (anu) => {
             break
             case 'next':
                 if (!isRegistered) return reply( ind.noregis())
-                if (isGroup) return  reply( 'Command ini tidak bisa digunakan di dalam grup!')
+                if (isGroup) return  reply( 'Este comando não pode ser usado em grupos! Apenas no meu Pv!')
                 anug = getRegisteredRandomId(_registered).replace('@s.whatsapp.net','')
                 await reply('Looking for a partner...')
                 await reply(`wa.me/${anug}`)
@@ -834,6 +834,7 @@ client.on('group-participants-update', async (anu) => {
 					break 
                 case 'slap':
                     kapankah = body.slice(1)
+                    if (!isRegistered) return reply(ind.noregis())
                     if (isLimit(sender)) return reply(ind.limitend(pusname))
 					const slap =['teste']
 					const ple = slap[Math.floor(Math.random() * slap.length)]
@@ -1322,28 +1323,27 @@ client.on('group-participants-update', async (anu) => {
 						reply(`Kirim gambar dengan caption ${prefix}sticker atau reply/tag gambar`)
 					}
 					break
-				case 'gtts':	
-				case 'tts':
-				case 'audio':
-				  if (!isRegistered) return reply(ind.noregis())
+					case 'tts':
+				if (!isRegistered) return reply(ind.noregis())
 				if (isLimit(sender)) return reply(ind.limitend(pusname))
-					if (args.length < 1) return client.sendMessage(from, '*「 ❗ 」 Informe o idioma! exemplo: pt,it,ja,es*', text, {quoted: mek})
+				if (args.length < 1) return client.sendMessage(from, 'Diperlukan kode bahasa!!', text, {quoted: mek})
 					const gtts = require('./lib/gtts')(args[0])
-					if (args.length < 2) return client.sendMessage(from, '*「 ❗ 」 Informe o texto deseja que eu diga!*', text, {quoted: mek})
-					dtt = body.slice(9)
+					if (args.length < 2) return client.sendMessage(from, 'Textnya mana om', text, {quoted: mek})
+					dtt = body.slice(8)
 					ranm = getRandom('.mp3')
 					rano = getRandom('.ogg')
-					dtt.length > 300
-					? reply('*「 ❗ 」 Texto muito longo, eu sou baianor!*')
+					dtt.length > 600
+					? reply('Textnya kebanyakan om')
 					: gtts.save(ranm, dtt, function() {
 						exec(`ffmpeg -i ${ranm} -ar 48000 -vn -c:a libopus ${rano}`, (err) => {
 							fs.unlinkSync(ranm)
-							buff = fs.readFileSync(rano)
-							if (err) return reply('*「 ❗ 」 ERRO! Tente novamente mais tarde!*')
-							client.sendMessage(from, buff, audio, {quoted: mek, ptt:true})
+							buffer = fs.readFileSync(rano)
+							if (err) return reply('Gagal om:(')
+							client.sendMessage(from, buffer, audio, {quoted: mek, ptt:true})
 							fs.unlinkSync(rano)
 						})
 					})
+					await limitAdd(sender)
 					break
 				case 'setprefix':
 					if (args.length < 1) return
