@@ -838,7 +838,7 @@ client.on('group-participants-update', async (anu) => {
                     if (isLimit(sender)) return reply(ind.limitend(pusname))
 					const slap =['teste']
 					const ple = slap[Math.floor(Math.random() * slap.length)]
-					pod = await getBuffer(`https://i.imgur.com/5U2V0yW.jpg`)
+					pod = await getBuffer(`https://i.imgur.com/5U2V0yW.jpg`,`https://i.imgur.com/eQskNdS.jpg`)
 					client.sendMessage(from, pod, image, { quoted: mek, caption: '*olá*\n\n'+ ple })
 					await limitAdd(sender)
 					break
@@ -1538,10 +1538,10 @@ client.on('group-participants-update', async (anu) => {
 					if (!isGroupAdmins) return reply(mess.only.admin)
 					if (!isBotGroupAdmins) return reply(mess.only.Badmin)
 					if (args[0] === 'abrir') {
-					    reply(`*「 ✔️ 」 Grupo aberto para todos os membros!*`)
+					    reply(`*「 ✔️ Grupo aberto para todos os membros! 」*`)
 						client.groupSettingChange(from, GroupSettingChange.messageSend, false)
 					} else if (args[0] === 'fechar') {
-						reply(`*「 ❗ 」 Grupo fechado para membros comuns!*`)
+						reply(`*「 🔒 Grupo fechado para membros comuns! 」*`)
 						client.groupSettingChange(from, GroupSettingChange.messageSend, true)
 					}
 					break
