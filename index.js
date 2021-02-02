@@ -673,6 +673,20 @@ client.on('group-participants-update', async (anu) => {
 					client.sendMessage(from, buffer, audio, {mimetype: 'audio/mp4', quoted: mek})
 					await limitAdd(sender)
 					break
+					case 'play':
+					  if (!isRegistered) return reply(ind.noregis())
+            if (isLimit(sender)) return reply(ind.limitend(pusname))
+	          if (!isUser) return reply(mess.only.daftarB)
+                reply(mess.wait)
+                play = body.slice(5)
+                anu = await fetchJson(`https://api.zeks.xyz/api/ytplaymp3?q=${play}&apikey=apivinz`)
+               if (anu.error) return reply(anu.error)
+                 infomp3 = `*Musica encontrada!!*\nJudul : ${anu.result.title}\nFonte : ${anu.result.source}\nTamanho : ${anu.result.size}\n\n*Aguarde, não floode!*`
+                buffer = await getBuffer(anu.result.thumbnail)
+                lagu = await getBuffer(anu.result.url_audio)
+                client.sendMessage(from, buffer, image, {quoted: mek, caption: infomp3})
+                client.sendMessage(from, lagu, audio, {mimetype: 'audio/mp4', filename: `${anu.title}.mp3`, quoted: mek})
+                break
 				case 'limite':
 				   if (!isRegistered) return reply(ind.noregis())
 				   checkLimit(sender)
@@ -838,7 +852,7 @@ client.on('group-participants-update', async (anu) => {
                     if (isLimit(sender)) return reply(ind.limitend(pusname))
 					const slap =['teste']
 					const ple = slap[Math.floor(Math.random() * slap.length)]
-					pod = await getBuffer(`https://i.imgur.com/5U2V0yW.jpg`,`https://i.imgur.com/eQskNdS.jpg`)
+					pod = await getBuffer(`https://i.imgur.com/5U2V0yW.jpg`)
 					client.sendMessage(from, pod, image, { quoted: mek, caption: '*olá*\n\n'+ ple })
 					await limitAdd(sender)
 					break
@@ -1382,9 +1396,10 @@ client.on('group-participants-update', async (anu) => {
 						if (!isGroupAdmins)return reply(mess.only.admin)
 						client.deleteMessage(from, { id: mek.message.extendedTextMessage.contextInfo.stanzaId, remoteJid: from, fromMe: true })
 						break
-				case 'membros':
+						case 'membros':
 				client.updatePresence(from, Presence.composing) 
 					if (!isGroup) return reply(mess.only.group)
+                                        if (!isUser) return reply(mess.only.daftarB)
 					if (!isGroupAdmins) return reply(mess.only.admin)
 					members_id = []
 					teks = (args.length > 1) ? body.slice(8).trim() : ''
@@ -1393,50 +1408,9 @@ client.on('group-participants-update', async (anu) => {
 						teks += `╠➥ @${mem.jid.split('@')[0]}\n`
 						members_id.push(mem.jid)
 					}
-					if (text.includes('random')){
-						conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil',MessageType.text, { quoted: m } );
-						}
-						   if (text.includes("random"))
-						   {
-							var items = ["ullzang girl", "cewe cantik", "cewe hijab", "remaja cantik", "cewek jepang"];
-							var cewe = items[Math.floor(Math.random() * items.length)];
-							var url = "https://api.fdci.se/rep.php?gambar=" + cewe;
-							
-							axios.get(url)
-							  .then((result) => {
-								var b = JSON.parse(JSON.stringify(result.data));
-								var cewek =  b[Math.floor(Math.random() * b.length)];
-								imageToBase64(cewek) // Path to the image
-								.then(
-									(response) => {
-							conn.sendMessage(id, 'Jaja eu mando sabosta espera', MessageType.text, { quoted: m } )
-							var buf = Buffer.from(response, 'base64'); // Ta-da	
-							conn.sendMessage(id, buf ,MessageType.image, { caption: `nih gan`, quoted: m } )
-							   
-									}
-								)
-								.catch(
-									(error) => {
-										console.log(error); // Logs an error if there was one
-									}
-								)
-							
-							});
-							}
-							if (text.includes('Bot')){
-								conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .bot apa kabar_',MessageType.text, { quoted: m } );
-								}
-								if (text.includes("bot")){
-								const teks = text.replace(/.bot /, "")
-								axios.get(`https://st4rz.herokuapp.com/api/simsimi?kata=${teks}`).then((res) => {
-									let hasil = `${res.data.result}\n\n*Simsimi chat*`;
-									conn.sendMessage(id, hasil ,MessageType.text, {quoted: m});
-								})
-								}
-						
-					mentions('╔══✪〘 Membros do grupo! 〙✪══\n╠➥'+teks+'╚═〘 HDBot.exe 〙', members_id, true)
+					mentions('╔══✪〘 Membros do Grupo 〙✪══\n╠➥'+teks+'╚═〘 HDBot.exe 〙', members_id, true)
 					break
-                case 'pokemon':
+          case 'pokemon':
 					anu = await fetchJson(`https://api.fdci.se/rep.php?gambar=pokemon`, {method: 'get'})
 					reply(mess.wait)
 					var n = JSON.parse(JSON.stringify(anu));
@@ -1765,6 +1739,16 @@ client.on('group-participants-update', async (anu) => {
 					}
 					await limitAdd(sender)
 					break
+					case 'pubglogo':
+          var gh = body.slice(9)
+          var teks1 = gh.split("|")[0];
+          var teks2 = gh.split("|")[1];
+          if (args.length < 1) return reply(`onde está o texto ?\nExemplo: ${prefix}pubglogo texto1|texto2`)
+          if (!isUser) return reply(mess.only.daftarB)
+          anu = await fetchJson(`https://tobz-api.herokuapp.com/api/photooxy?theme=pubg&text1=${teks1}&text2=${teks2}&apikey=BotWeA`, {method: 'get'})
+          buffer = await getBuffer(anu.result)
+          client.sendMessage(from, buffer, image, {quoted: mek, caption: 'Nih logonya kak...'})
+          break
 				case 'wait':
 					if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
 						reply(ind.wait())
