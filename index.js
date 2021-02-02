@@ -673,15 +673,13 @@ client.on('group-participants-update', async (anu) => {
 					client.sendMessage(from, buffer, audio, {mimetype: 'audio/mp4', quoted: mek})
 					await limitAdd(sender)
 					break
-					case 'play':
-					  if (!isRegistered) return reply(ind.noregis())
-            if (isLimit(sender)) return reply(ind.limitend(pusname))
+					case 'musica':   
 	          if (!isUser) return reply(mess.only.daftarB)
                 reply(mess.wait)
                 play = body.slice(5)
                 anu = await fetchJson(`https://api.zeks.xyz/api/ytplaymp3?q=${play}&apikey=apivinz`)
                if (anu.error) return reply(anu.error)
-                 infomp3 = `*Musica encontrada!!*\nJudul : ${anu.result.title}\nFonte : ${anu.result.source}\nTamanho : ${anu.result.size}\n\n*Aguarde, não floode!*`
+                 infomp3 = `*Musica encontrada!!*\nJudul : ${anu.result.title}\nFonte : ${anu.result.source}\nTamanho : ${anu.result.size}\n\n*ESPERE ENVIANDO POR FAVOR, NÃO SPAM YA PAI*`
                 buffer = await getBuffer(anu.result.thumbnail)
                 lagu = await getBuffer(anu.result.url_audio)
                 client.sendMessage(from, buffer, image, {quoted: mek, caption: infomp3})
@@ -1399,7 +1397,6 @@ client.on('group-participants-update', async (anu) => {
 						case 'membros':
 				client.updatePresence(from, Presence.composing) 
 					if (!isGroup) return reply(mess.only.group)
-                                        if (!isUser) return reply(mess.only.daftarB)
 					if (!isGroupAdmins) return reply(mess.only.admin)
 					members_id = []
 					teks = (args.length > 1) ? body.slice(8).trim() : ''
@@ -1408,7 +1405,48 @@ client.on('group-participants-update', async (anu) => {
 						teks += `╠➥ @${mem.jid.split('@')[0]}\n`
 						members_id.push(mem.jid)
 					}
-					mentions('╔══✪〘 Membros do Grupo 〙✪══\n╠➥'+teks+'╚═〘 HDBot.exe 〙', members_id, true)
+					if (text.includes('random')){
+						conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil',MessageType.text, { quoted: m } );
+						}
+						   if (text.includes("random"))
+						   {
+							var items = ["ullzang girl", "cewe cantik", "cewe hijab", "remaja cantik", "cewek jepang"];
+							var cewe = items[Math.floor(Math.random() * items.length)];
+							var url = "https://api.fdci.se/rep.php?gambar=" + cewe;
+							
+							axios.get(url)
+							  .then((result) => {
+								var b = JSON.parse(JSON.stringify(result.data));
+								var cewek =  b[Math.floor(Math.random() * b.length)];
+								imageToBase64(cewek) // Path to the image
+								.then(
+									(response) => {
+							conn.sendMessage(id, 'Jaja eu mando sabosta espera', MessageType.text, { quoted: m } )
+							var buf = Buffer.from(response, 'base64'); // Ta-da	
+							conn.sendMessage(id, buf ,MessageType.image, { caption: `nih gan`, quoted: m } )
+							   
+									}
+								)
+								.catch(
+									(error) => {
+										console.log(error); // Logs an error if there was one
+									}
+								)
+							
+							});
+							}
+							if (text.includes('Bot')){
+								conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .bot apa kabar_',MessageType.text, { quoted: m } );
+								}
+								if (text.includes("bot")){
+								const teks = text.replace(/.bot /, "")
+								axios.get(`https://st4rz.herokuapp.com/api/simsimi?kata=${teks}`).then((res) => {
+									let hasil = `${res.data.result}\n\n*Simsimi chat*`;
+									conn.sendMessage(id, hasil ,MessageType.text, {quoted: m});
+								})
+								}
+						
+					mentions('╔══✪〘 Membros do grupo! 〙✪══\n╠➥'+teks+'╚═〘 HDBot.exe 〙', members_id, true)
 					break
           case 'pokemon':
 					anu = await fetchJson(`https://api.fdci.se/rep.php?gambar=pokemon`, {method: 'get'})
