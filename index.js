@@ -835,10 +835,10 @@ client.on('group-participants-update', async (anu) => {
                 case 'slap':
                     kapankah = body.slice(1)
                     if (isLimit(sender)) return reply(ind.limitend(pusname))
-					const slap =['anjing','babi lu','anak anjing','udah tolol nub Lagi','muka lo kek monyet','udah jomblo sendirian lagi dirumah tolol','so so an mau punya pacar muka aja kek monyet lepass dari kandang','ganteng doang di toxic aja dibilang baperan','pantek kau','bangsat kau','ku entod kalian nangis kau','memek lu semua','lihat anak anjing lagi baca','ganteng doang jemput cewe dipanggang','kamu cantik beb bullshit anjing cowo buaya','anak dajjal','puki lu','anjing ngajak gelud','sama hantu takut cupu ngentod','cupu cupu aja gausah bacot','kontol lu semua','bocah lu semua kontol','3 Hari Lagi']
+					const slap =['teste']
 					const ple = slap[Math.floor(Math.random() * slap.length)]
-					pod = await getBuffer(`https://media.giphy.com/media/S8507sBJm1598XnsgD/source.gif`)
-					client.sendMessage(from, pod, image, { quoted: mek, caption: '*Toxic*\n\n'+ ple })
+					pod = await getBuffer(`https://i.imgur.com/5U2V0yW.jpg`)
+					client.sendMessage(from, pod, image, { quoted: mek, caption: '*olá*\n\n'+ ple })
 					await limitAdd(sender)
 					break
 					case 'tampar':
@@ -1265,6 +1265,7 @@ client.on('group-participants-update', async (anu) => {
 				case 'stiker': 
 				case 'sticker':
 				case 'fig':
+				if (!isRegistered) return reply(ind.noregis())
 				    if (isLimit(sender)) return reply(ind.limitend(pusname))
                     await limitAdd(sender)
 					if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
@@ -1321,27 +1322,28 @@ client.on('group-participants-update', async (anu) => {
 						reply(`Kirim gambar dengan caption ${prefix}sticker atau reply/tag gambar`)
 					}
 					break
+				case 'gtts':	
+				case 'tts':
 				case 'audio':
-				if (!isRegistered) return reply(ind.noregis())
+				  if (!isRegistered) return reply(ind.noregis())
 				if (isLimit(sender)) return reply(ind.limitend(pusname))
-				if (args.length < 1) return client.sendMessage(from, 'Diperlukan kode bahasa!!', text, {quoted: mek})
+					if (args.length < 1) return client.sendMessage(from, '*「 ❗ 」 Informe o idioma! exemplo: pt,it,ja,es*', text, {quoted: mek})
 					const gtts = require('./lib/gtts')(args[0])
-					if (args.length < 2) return client.sendMessage(from, 'Textnya mana om', text, {quoted: mek})
-					dtt = body.slice(8)
+					if (args.length < 2) return client.sendMessage(from, '*「 ❗ 」 Informe o texto deseja que eu diga!*', text, {quoted: mek})
+					dtt = body.slice(9)
 					ranm = getRandom('.mp3')
 					rano = getRandom('.ogg')
-					dtt.length > 600
-					? reply('Textnya kebanyakan om')
+					dtt.length > 300
+					? reply('*「 ❗ 」 Texto muito longo, eu sou baianor!*')
 					: gtts.save(ranm, dtt, function() {
 						exec(`ffmpeg -i ${ranm} -ar 48000 -vn -c:a libopus ${rano}`, (err) => {
 							fs.unlinkSync(ranm)
-							buffer = fs.readFileSync(rano)
-							if (err) return reply('Gagal om:(')
-							client.sendMessage(from, buffer, audio, {quoted: mek, ptt:true})
+							buff = fs.readFileSync(rano)
+							if (err) return reply('*「 ❗ 」 ERRO! Tente novamente mais tarde!*')
+							client.sendMessage(from, buff, audio, {quoted: mek, ptt:true})
 							fs.unlinkSync(rano)
 						})
 					})
-					await limitAdd(sender)
 					break
 				case 'setprefix':
 					if (args.length < 1) return
